@@ -1,0 +1,146 @@
+[
+  {
+    "id": "1",
+    "title": "实现 skills-linter 工具",
+    "description": "自动检查 skills/ 目录下所有 Skills 是否符合 agent_skills_spec.md 规范",
+    "status": "pending",
+    "priority": "high",
+    "tag": "master",
+    "dependencies": [],
+    "details": "包括 YAML 解析、规则检查（ERROR/WARNING/INFO 三级）、并行处理、JSON 输出等功能。预计总时间：8-10 小时。",
+    "testStrategy": "单元测试覆盖所有规则，集成测试验证完整流程，在真实 skills/ 目录上运行验证。",
+    "subtasks": [
+      {
+        "id": "1.1",
+        "title": "初始化项目结构与核心数据模型",
+        "description": "创建 skills_linter/ package 目录结构，实现核心数据模型（Skill, Issue, CheckResult）",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [],
+        "details": "新增文件：skills_linter/__init__.py, skills_linter/models.py, skills_linter/rules/__init__.py。使用 dataclasses 定义数据结构。",
+        "testStrategy": "验证可以导入模块，数据类定义正确。",
+        "estimatedTime": "30分钟"
+      },
+      {
+        "id": "1.2",
+        "title": "实现 YAML frontmatter 和 Markdown 解析器",
+        "description": "实现解析 SKILL.md 文件的功能，提取 YAML frontmatter 和 Markdown 正文",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          "1.1"
+        ],
+        "details": "新增文件：skills_linter/parser.py。处理解析错误（文件不存在、YAML 格式错误等）。使用 pyyaml 库。",
+        "testStrategy": "单元测试：正常文件、缺失 frontmatter、YAML 语法错误。",
+        "estimatedTime": "60分钟"
+      },
+      {
+        "id": "1.3",
+        "title": "实现规则基类与规则注册机制",
+        "description": "实现 Rule 抽象基类，实现规则自动发现机制（约定式命名）",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          "1.1"
+        ],
+        "details": "新增文件：skills_linter/rules/base.py。修改：skills_linter/rules/__init__.py。实现 discover_rules() 函数。",
+        "testStrategy": "单元测试：发现规则、实例化规则。",
+        "estimatedTime": "45分钟"
+      },
+      {
+        "id": "1.4",
+        "title": "实现核心检查规则（ERROR 级别）",
+        "description": "实现 5 个 ERROR 级别规则：required_fields, name_format, name_directory_match, field_types, yaml_syntax",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          "1.2",
+          "1.3"
+        ],
+        "details": "新增文件：skills_linter/rules/required_fields.py, name_format.py, name_directory_match.py, field_types.py, yaml_syntax.py。每个规则继承 Rule 基类。",
+        "testStrategy": "每个规则至少 2 个单元测试（通过、失败）。",
+        "estimatedTime": "90分钟"
+      },
+      {
+        "id": "1.5",
+        "title": "实现最佳实践规则（WARNING/INFO 级别）",
+        "description": "实现 3 个 WARNING/INFO 级别规则：license_check, reference_integrity, writing_style",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [
+          "1.2",
+          "1.3"
+        ],
+        "details": "新增文件：skills_linter/rules/license_check.py, reference_integrity.py, writing_style.py。reference_integrity 需要解析 Markdown 引用，writing_style 需要检测语气。",
+        "testStrategy": "每个规则至少 2 个单元测试。",
+        "estimatedTime": "90分钟"
+      },
+      {
+        "id": "1.6",
+        "title": "实现检查器主逻辑与并行调度",
+        "description": "实现 Checker 类，负责协调规则执行，实现并行检查多个 Skills",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          "1.4",
+          "1.5"
+        ],
+        "details": "新增文件：skills_linter/checker.py。使用 concurrent.futures.ProcessPoolExecutor 实现并行。扫描 skills/ 目录并加载所有 Skills。",
+        "testStrategy": "集成测试：检查多个 Skills，验证并行执行。",
+        "estimatedTime": "60分钟"
+      },
+      {
+        "id": "1.7",
+        "title": "实现 JSON 输出格式化",
+        "description": "实现 JSONReporter 类，生成符合设计的 JSON 输出结构",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          "1.6"
+        ],
+        "details": "新增文件：skills_linter/reporter.py。JSON 输出包含 summary（统计信息）和 results（每个 Skill 的检查结果）。",
+        "testStrategy": "单元测试：无问题、有问题。验证 JSON 格式正确。",
+        "estimatedTime": "45分钟"
+      },
+      {
+        "id": "1.8",
+        "title": "实现 CLI 入口与参数解析",
+        "description": "实现 __main__.py，支持 python -m skills_linter 运行，实现退出码逻辑",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          "1.7"
+        ],
+        "details": "新增文件：skills_linter/__main__.py。支持 --path 和 --max-workers 参数。退出码：0（通过）、1（ERROR）、2（WARNING）。",
+        "testStrategy": "端到端测试：通过、失败。验证退出码正确。",
+        "estimatedTime": "45分钟"
+      },
+      {
+        "id": "1.9",
+        "title": "编写单元测试与集成测试",
+        "description": "为所有模块编写单元测试，编写集成测试，确保测试覆盖率 >80%",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [
+          "1.8"
+        ],
+        "details": "新增：tests/ 目录及所有测试文件。每个规则、parser、checker、reporter 都有单元测试。至少 2 个集成测试。",
+        "testStrategy": "运行所有测试，确保通过率 100%，覆盖率 >80%。",
+        "estimatedTime": "90分钟"
+      },
+      {
+        "id": "1.10",
+        "title": "编写文档与使用说明",
+        "description": "编写 skills_linter/README.md，更新仓库根目录 README.md",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [
+          "1.9"
+        ],
+        "details": "新增：skills_linter/README.md。修改：README.md（仓库根目录）。包含安装、使用、输出格式、规则列表。",
+        "testStrategy": "文档清晰易懂，包含示例，可以按照文档成功运行工具。",
+        "estimatedTime": "45分钟"
+      }
+    ]
+  }
+]

@@ -1,0 +1,36 @@
+# Claude Code Test PRD
+
+## Project Overview
+This is a test project to verify that Taskmaster is working correctly with Claude Code provider.
+
+## Core Features
+
+### 1. User Authentication
+- Implement login form with username and password
+- Add JWT token-based authentication
+- Include "Remember Me" functionality
+- Password reset via email
+
+### 2. Dashboard
+- Display user profile information
+- Show list of recent activities
+- Quick action buttons for common tasks
+- Real-time notification bell
+
+### 3. Settings Panel
+- User profile editing
+- Password change functionality
+- Email notification preferences
+- Theme selection (light/dark mode)
+
+## Technical Requirements
+- Use TypeScript for type safety
+- Use React for UI components
+- Use React Query for data fetching
+- Implement responsive design for mobile
+
+## Testing Requirements
+- Unit tests for all components
+- Integration tests for auth flow
+- E2E tests for critical paths
+- Test coverage should be >= 80%
