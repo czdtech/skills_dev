@@ -78,11 +78,77 @@
         ],
         "status": "pending",
         "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Calculator Project",
+        "description": "创建一个简单的函数式计算器，包含 add 和 multiply 函数。要求：使用 TypeScript 和 Vitest；符合函数式编程风格；代码简洁(每个函数 ≤3 行)。验收标准：所有 Vitest 测试通过；测试覆盖率 ≥90%；TypeScript 编译无错误；函数符合纯函数定义。",
+        "details": "",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "初始化 TypeScript 配置和项目结构",
+            "description": "创建 tsconfig.json 配置文件，设置 src/ 和 tests/ 目录结构，确保 TypeScript 编译环境就绪",
+            "dependencies": [],
+            "details": "创建 tsconfig.json（target: ES2020, module: ESNext, strict: true）；创建 src/calculator.ts 和 tests/calculator.test.ts 文件骨架；配置路径映射和输出目录",
+            "status": "pending",
+            "testStrategy": "运行 tsc --noEmit 验证配置无错误；检查目录结构是否符合预期"
+          },
+          {
+            "id": 2,
+            "title": "配置 Vitest 测试环境",
+            "description": "创建 vitest.config.ts，配置测试覆盖率工具（c8/istanbul），设置覆盖率阈值 ≥90%",
+            "dependencies": [
+              1
+            ],
+            "details": "创建 vitest.config.ts（coverage.provider: 'v8', coverage.lines: 90, coverage.functions: 90）；在 package.json 添加测试脚本：test, test:coverage；验证 Vitest 可正常运行",
+            "status": "pending",
+            "testStrategy": "运行 npm test 验证测试框架启动；运行 npm run test:coverage 验证覆盖率报告生成"
+          },
+          {
+            "id": 3,
+            "title": "实现 add 函数（TDD RED 阶段）",
+            "description": "先编写 add 函数的失败测试用例，覆盖正数、负数、零、浮点数等边界情况",
+            "dependencies": [
+              2
+            ],
+            "details": "在 tests/calculator.test.ts 编写测试：test('add(2, 3) returns 5'), test('add(-1, 1) returns 0'), test('add(0.1, 0.2) returns 0.3')；运行测试确认失败（RED）；实现 src/calculator.ts 中的 add 函数（≤3 行，纯函数）",
+            "status": "pending",
+            "testStrategy": "测试必须先失败（RED），然后实现后全部通过（GREEN）；验证函数为纯函数（无副作用）"
+          },
+          {
+            "id": 4,
+            "title": "实现 multiply 函数（TDD RED 阶段）",
+            "description": "先编写 multiply 函数的失败测试用例，覆盖正数、负数、零、浮点数等边界情况",
+            "dependencies": [
+              3
+            ],
+            "details": "在 tests/calculator.test.ts 编写测试：test('multiply(2, 3) returns 6'), test('multiply(-2, 3) returns -6'), test('multiply(0, 5) returns 0')；运行测试确认失败（RED）；实现 src/calculator.ts 中的 multiply 函数（≤3 行，纯函数）",
+            "status": "pending",
+            "testStrategy": "测试必须先失败（RED），然后实现后全部通过（GREEN）；验证函数为纯函数（无副作用）"
+          },
+          {
+            "id": 5,
+            "title": "验收测试与质量检查",
+            "description": "运行完整测试套件，验证覆盖率 ≥90%，TypeScript 编译无错误，所有函数符合纯函数定义",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "运行 npm run test:coverage 检查覆盖率报告（lines/functions/branches ≥90%）；运行 tsc --noEmit 验证无类型错误；检查 add 和 multiply 函数代码行数 ≤3 行；验证函数无副作用（无外部状态修改、无 I/O 操作）",
+            "status": "pending",
+            "testStrategy": "所有 Vitest 测试通过；覆盖率报告显示 ≥90%；TypeScript 编译成功；代码审查确认符合函数式编程风格"
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-11-23T02:28:39.565Z",
-      "updated": "2025-11-23T08:24:47.126Z",
+      "updated": "2025-11-26T06:28:45.560Z",
       "description": "Tasks for master context"
     }
   }
