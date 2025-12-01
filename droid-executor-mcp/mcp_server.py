@@ -20,7 +20,7 @@ def startup():
     try:
         print("Starting Droid Executor bridge service...", file=sys.stderr)
         subprocess.run(
-            ["npx", "pm2", "start", "ecosystem.config.js"],
+            ["npx", "pm2", "start", "ecosystem.config.cjs"],
             check=True,
             cwd=os.path.dirname(os.path.abspath(__file__))
         )
@@ -33,7 +33,7 @@ def shutdown():
     try:
         print("Stopping Droid Executor bridge service...", file=sys.stderr)
         subprocess.run(
-            ["npx", "pm2", "stop", "ecosystem.config.js"],
+            ["npx", "pm2", "stop", "ecosystem.config.cjs"],
             check=True,
             cwd=os.path.dirname(os.path.abspath(__file__))
         )

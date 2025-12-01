@@ -2,15 +2,21 @@ import http.server
 import json
 import logging
 import sys
+import os
 from typing import Any, Callable, Dict
+
+# 允许通过环境变量控制日志级别，默认最小化输出
+LOG_LEVEL = os.getenv("LOG_LEVEL", "ERROR").upper()
+NUMERIC_LEVEL = getattr(logging, LOG_LEVEL, logging.ERROR)
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=NUMERIC_LEVEL,
     format="%(asctime)s [%(levelname)s] %(message)s",
     stream=sys.stdout,
 )
 logger = logging.getLogger("BridgeServer")
+logger.setLevel(NUMERIC_LEVEL)
 
 
 class BridgeRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -43,14 +49,23 @@ class BridgeRequestHandler(http.server.BaseHTTPRequestHandler):
                 response = self.__class__.handler_func(payload)
             else:
                 response = {"error": "No handler function defined"}
-                
+
             response_bytes = json.dumps(response).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(response_bytes)))
-            self.end_headers()
-            self.wfile.write(response_bytes)
-            
+            try:
+                self.end_headers()
+            except BrokenPipeError:
+                logger.info("Client closed connection before headers were sent")
+                return
+
+            try:
+                self.wfile.write(response_bytes)
+            except BrokenPipeError:
+                logger.info("Client closed connection before body was sent")
+                return
+
         except Exception as e:
             logger.error(f"Error processing request: {e}", exc_info=True)
             self.send_response(500)

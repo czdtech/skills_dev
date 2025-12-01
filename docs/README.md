@@ -1,127 +1,63 @@
-# 📚 Multi-Agent Skills Development - 文档中心
+# 📚 文档中心
 
-> **项目**: Claude Code 多角色协作开发环境  
-> **最后更新**: 2025-11-24
-
----
-
-## 🗺️ 文档导航
-
-### 🏗️ 架构设计
-
-- **[多角色协作工作流](./architecture/multi-agent-workflow.md)**  
-  完整的 Claude Code + Codex + Droid + Taskmaster 协作架构设计
-
-- **[Skills 实现架构](./architecture/skills-implementation.md)**  
-  Bridge 服务架构 vs 脚本式实现对比分析
-
-- **[系统提示词演化](./architecture/prompt-evolution.md)**  
-  CLAUDE.md 的优化历程与设计哲学
-
-### 🔌 集成指南
-
-- **[Taskmaster 完整集成](./integration/taskmaster-integration.md)**  
-  三层集成模式:MCP状态记录 + CLI批量处理 + Autopilot TDD
-
-- **[Skills 生态依赖](./integration/skills-ecosystem.md)**  
-  skill-creator 与相关项目的依赖关系图
-
-### 📊 测试报告
-
-- **[Taskmaster 能力测试](./reports/taskmaster-tests.md)**  
-  完整的功能测试、MCP集成验证和能力评估
-
-- **[API 配置指南](./reports/configuration.md)**  
-  Anthropic/Perplexity/Claude Code 等 Provider 配置完全指南
-
-- **[MCP 集成指南](./reports/mcp-integration.md)**  
-  Cursor/Windsurf/VS Code 等 IDE 的 MCP 配置
-
-### 🤖 Multi-Agent MCP
-
-- **[MCP 拆分总结](./multi-agent-mcp-split-summary.md)**  
-  multi-agent-mcp 拆分为两个独立 MCP 服务器的完整总结
-
-- **[架构对齐分析](./multi-agent-architecture-alignment.md)**  
-  Skill 和 MCP 版本的架构对比、代码共享策略和部署建议
-
-- **[迁移指南](./multi-agent-mcp-migration-guide.md)**  
-  从 multi-agent-mcp 迁移到新拆分版本的详细步骤
-
-- **[快速参考](./multi-agent-mcp-quick-reference.md)** ⚡  
-  常用命令、配置参数和故障排查速查表
-
-- **[测试等价性分析](./testing-equivalence.md)**  
-  MCP 和 Skill 测试的关系、覆盖率和最佳实践
-
-- **[测试报告](./TEST_REPORT.md)** 📊  
-  完整的功能测试结果、性能数据和等价性验证
+> Multi-Agent Skills Development 项目文档  
+> 最后更新: 2025-11-28
 
 ---
 
 ## 🚀 快速开始
 
-### 1. 理解架构
+```bash
+# 查看项目状态
+cat docs/project-status/PROJECTS_COMPLIANCE_REPORT.md
 
-首先阅读 **[多角色协作工作流](./architecture/multi-agent-workflow.md)** 了解整体设计
+# 快速参考
+cat docs/project-status/multi-agent-mcp-quick-reference.md
 
-### 2. 配置环境
-
-参考 **[API 配置指南](./reports/configuration.md)** 配置必要的 API 密钥
-
-### 3. 集成 Taskmaster
-
-按照 **[Taskmaster 完整集成](./integration/taskmaster-integration.md)** 启用任务管理
-
----
-
-## 🔗 文档维护
-
-- **[快速参考](./QUICK_REFERENCE.md)** - 常用命令和快捷入口 ⚡
-- **[维护指南](./MAINTENANCE_GUIDE.md)** - 文档系统维护规范和检查清单
-- **[整理总结](./REORGANIZATION_SUMMARY.md)** - 2025-11-24 文档重构完整记录
+# 运行测试
+bash tests/quick_verify.sh
+```
 
 ---
 
-## 📖 核心概念
+## 📂 文档结构
 
-### 角色定位
+### 📦 [project-status/](./project-status/) - 项目状态
+- **PROJECTS_COMPLIANCE_REPORT.md** - 四个项目的合规性报告和测试结果
+- **multi-agent-mcp-quick-reference.md** - 快速安装和使用指南
 
-- **Claude Code**: 首席架构师/中控,负责理解需求、设计方案、协调资源
-- **Codex**: 技术顾问,提供架构评审和技术决策支持
-- **Droid**: 执行引擎,负责代码实现和测试执行
-- **Taskmaster**: 任务管理系统(可选),提供三层集成能力
+### 🏗️ [architecture/](./architecture/) - 架构设计
+- **multi-agent-workflow.md** - 多角色协作工作流
+- **skills-implementation.md** - Skills 实现架构对比
+- **multi-agent-architecture-alignment.md** - Skill vs MCP 架构对齐
+- **testing-equivalence.md** - 测试等价性分析
+- **prompt-evolution.md** - 系统提示词演化
+- **skills-creator-dependency-graph.md** - 依赖关系图
 
-### 工作流阶段
+### 🔌 [integration/](./integration/) - 集成指南
+- **taskmaster-integration.md** - Taskmaster 三层集成
+- **skills-ecosystem.md** - Skills 生态系统
 
-1. 接单与现实检验
-2. 代码与上下文探索
-3. 澄清问题与补全需求
-4. 架构方案设计与 Codex 评审(按需)
-5. 任务拆分与排程
-6. 实现与执行(Droid 为主)
-7. 质量检查与总结
+### 📊 [reports/](./reports/) - 配置报告
+- **configuration.md** - API Provider 配置指南
+- **mcp-integration.md** - IDE MCP 配置指南
+- **taskmaster-tests.md** - Taskmaster 能力测试
 
----
+### 🔧 [troubleshooting/](./troubleshooting/) - 故障排除
+- **DROID_PERMISSION_ISSUE_EXPLAINED.md** - Droid 权限配置说明
 
-## 🔗 相关资源
-
-- **系统提示词**: [CLAUDE.md](../CLAUDE.md) | [AGENT.md](../AGENT.md)
-- **Skills 仓库**: [./skills/](../skills/)
-- **子项目**: [./codex-advisor-skill/](../codex-advisor-skill/) | [./droid-executor-skill/](../droid-executor-skill/)
-
----
-
-## 📝 文档维护
-
-如需更新文档,请保持以下原则:
-
-1. **单一真相来源**: 避免重复内容,使用引用链接
-2. **清晰分类**: 架构/集成/报告 三个层次
-3. **及时更新**: 重大变更后更新相关文档和此导航
-4. **版本标注**: 重要变更记录日期和版本号
+### 📝 [changelog/](./changelog/) - 变更记录
+- **PORT_CHANGE_NOTICE.md** - 端口变更说明
+- **MAINTENANCE_GUIDE.md** - 文档维护指南
 
 ---
 
-**维护者**: Multi-Agent Development Team  
-**License**: 内部文档,仅供团队使用
+## 🎯 常用文档
+
+| 需求 | 文档 |
+|------|------|
+| 了解项目状态 | [项目合规性报告](./project-status/PROJECTS_COMPLIANCE_REPORT.md) |
+| 快速安装使用 | [快速参考](./project-status/multi-agent-mcp-quick-reference.md) |
+| 理解架构设计 | [多角色协作工作流](./architecture/multi-agent-workflow.md) |
+| 配置 MCP | [MCP 集成指南](./reports/mcp-integration.md) |
+| 解决权限问题 | [Droid 权限说明](./troubleshooting/DROID_PERMISSION_ISSUE_EXPLAINED.md) |

@@ -23,8 +23,11 @@ node_modules/
 
 # OS specific
 .DS_Store
-multi-agent-studio/.venv
-multi-agent-mcp/.venv
+droid-executor-skill/.venv
+codex-advisor-skill/.venv
+droid-executor-mcp/.venv
+codex-advisor-mcp/.venv
+
 
 # Task files
 # tasks.json

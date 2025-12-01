@@ -16,6 +16,8 @@ def get_droid_cmd_base() -> List[str]:
     env_cmd = os.getenv("DROID_CLI_CMD")
     if env_cmd:
         return env_cmd.split()
+    # 官方 CLI 支持 --output-format json，返回固定字段，便于二次加工
+    # --auto high 允许自动执行而无需权限确认
     return ["droid", "exec", "--output-format", "json", "--auto", "high"]
 
 def build_prompt(payload: Dict[str, Any]) -> str:
@@ -23,6 +25,7 @@ def build_prompt(payload: Dict[str, Any]) -> str:
     objective = payload.get("objective") or payload.get("task_id") or "Execute the described task."
     instructions = payload.get("instructions") or ""
     ctx = payload.get("context") or {}
+    # Handle case where context is a string (e.g. passed from a simple client)
     if isinstance(ctx, str):
         ctx = {"summary": ctx}
         
@@ -45,7 +48,9 @@ def build_prompt(payload: Dict[str, Any]) -> str:
     parts.append(
         "Act as an implementation-focused coding agent. "
         "Execute the necessary edits and commands in the current repository to satisfy the objective "
-        "and acceptance criteria. Return a concise JSON summary of what you did."
+        "and acceptance criteria. Return a concise JSON summary of what you did. "
+        "Only describe actions actually performed; do NOT speculate about environment/ports/config if you did not verify them. "
+        "If asked not to modify files or run commands, do nothing and report that no operations were executed."
     )
 
     return "\n".join(parts)
@@ -171,6 +176,12 @@ def _normalize_success_output(raw_data: Any, raw_stdout: str) -> Dict[str, Any]:
     if not base["logs"] and raw_stdout.strip():
         base["logs"] = [_clip(raw_stdout)]
 
+    # 如果没有修改文件也没有执行命令，避免模型臆测端口/环境信息，强制使用固定摘要并清空日志/问题
+    if not base["files_changed"] and not base["commands_run"]:
+        base["summary"] = "No operations executed; no files changed; no commands run."
+        base["logs"] = []
+        base["issues"] = []
+
     return base
 
 
@@ -222,6 +233,7 @@ def handle_execute(payload: Dict[str, Any]) -> Dict[str, Any]:
     """Handles the execution request."""
     logger.info("Received execution request")
     
+    # === 输入验证 ===
     objective = payload.get("objective", "").strip()
     if not objective:
         logger.warning("Rejected request: empty objective")
@@ -239,6 +251,7 @@ def handle_execute(payload: Dict[str, Any]) -> Dict[str, Any]:
             }]
         }
     
+    # 验证输入长度（防止过长导致性能问题）
     if len(objective) > 50000:
         logger.warning(f"Rejected request: objective too long ({len(objective)} chars)")
         return {

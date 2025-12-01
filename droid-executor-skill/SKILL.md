@@ -1,6 +1,7 @@
 ---
 name: droid-executor
-description: This skill should be used when executing predefined coding tasks after the architecture and plan have been determined by Claude Code. It modifies code, runs tests and commands, and returns structured results following a clear execution contract.
+description: Execute predefined coding tasks after architecture decisions. Use when tasks have clear objectives and acceptance criteria.
+license: Complete terms in LICENSE.txt
 ---
 
 # Droid Executor
