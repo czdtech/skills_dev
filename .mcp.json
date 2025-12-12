@@ -1,15 +1,36 @@
 {
-	"mcpServers": {
-		"task-master-ai": {
-			"type": "stdio",
-			"command": "npx",
-			"args": [
-				"-y",
-				"task-master-ai"
-			],
-			"env": {
-				"TASK_MASTER_TOOLS": "standard"
-			}
-		}
-	}
+  "mcpServers": {
+    "droid-executor": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "/home/jiang/work/for_claude/skills_dev/droid-executor-mcp",
+        "droid-executor"
+      ],
+      "env": {
+        "DROID_MODEL": "custom:MiniMax-M2-0",
+        "DROID_TIMEOUT": "1800",
+        "DROID_ENABLED_TOOLS": "LS,Read,Glob,Grep,Edit,Create,Execute",
+        "DROID_AUTO_LEVEL": "high",
+        "DROID_REASONING_EFFORT": "medium",
+        "DROID_MAX_WORKERS": "8",
+        "DROID_DAG_TIMEOUT": "3600"
+      }
+    },
+    "codex-advisor": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "/home/jiang/work/for_claude/skills_dev/codex-advisor-mcp",
+        "codex-advisor"
+      ],
+      "env": {
+        "CODEX_MODEL": "gpt-5.2",
+        "CODEX_TIMEOUT": "1800",
+        "CODEX_SANDBOX": "read-only",
+        "CODEX_REASONING_EFFORT": "high",
+        "CODEX_SKIP_GIT_CHECK": "true"
+      }
+    }
+  }
 }
