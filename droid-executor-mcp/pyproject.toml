@@ -3,7 +3,7 @@ name = "droid-executor-mcp"
 version = "1.0.0"
 description = "Implementation-focused coding agent MCP server powered by Droid CLI"
 requires-python = ">=3.10"
-dependencies = ["mcp>=1.0.0"]
+dependencies = ["mcp>=1.6.0"]
 
 [project.scripts]
 droid-executor = "droid_executor.server:main"

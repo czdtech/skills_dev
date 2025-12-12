@@ -3,7 +3,7 @@ name = "codex-advisor-mcp"
 version = "1.0.0"
 description = "Socratic technical review MCP server powered by Codex CLI"
 requires-python = ">=3.10"
-dependencies = ["mcp>=1.0.0"]
+dependencies = ["mcp>=1.6.0"]
 
 [project.scripts]
 codex-advisor = "codex_advisor.server:main"
