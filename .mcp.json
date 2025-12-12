@@ -10,9 +10,9 @@
       "env": {
         "DROID_MODEL": "custom:MiniMax-M2-0",
         "DROID_TIMEOUT": "1800",
-        "DROID_ENABLED_TOOLS": "LS,Read,Glob,Grep,Edit,Create,Execute",
+        "DROID_ENABLED_TOOLS": "LS,Read,Glob,Grep,Edit,Create",
         "DROID_AUTO_LEVEL": "high",
-        "DROID_REASONING_EFFORT": "medium",
+        "DROID_REASONING_EFFORT": "off",
         "DROID_MAX_WORKERS": "8",
         "DROID_DAG_TIMEOUT": "3600"
       }
