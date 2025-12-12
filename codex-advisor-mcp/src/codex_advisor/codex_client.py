@@ -32,6 +32,8 @@ _last_session_id: str | None = None
 
 def get_codex_cmd(session_id: str | None = None, resume_last: bool = False) -> list[str]:
     """构建 Codex CLI 命令。"""
+    is_resume = bool(session_id or resume_last)
+
     if session_id:
         cmd = ["codex", "exec", "resume", session_id]
     elif resume_last:
@@ -43,8 +45,8 @@ def get_codex_cmd(session_id: str | None = None, resume_last: bool = False) -> l
         if CODEX_SKIP_GIT_CHECK:
             cmd.append("--skip-git-repo-check")
 
-    # 添加模型参数
-    if CODEX_MODEL:
+    # resume 模式不支持 --model 参数
+    if not is_resume and CODEX_MODEL:
         cmd.extend(["--model", CODEX_MODEL])
 
     # 添加推理程度参数
